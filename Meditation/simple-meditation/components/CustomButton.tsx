@@ -24,7 +24,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     minHeight: 62,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginHorizontal: 10,
+    marginBottom: 15
   },
   text: {
     color: 'black',
