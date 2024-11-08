@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white",
-    marginBottom: 3,
+    margin: 8,
     textAlign: 'left',
     fontSize: 40,
     fontWeight: "600",
@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 20,
     fontWeight: "300",
+    margin: 8,
   },
   statusBar: {
     color: "white",
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
   },
   pressable: {
     height: 200,
-    margin: 10,
+    margin: 8,
     overflow: "hidden"
   },
   imageBackground: {
