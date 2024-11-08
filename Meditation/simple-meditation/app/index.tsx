@@ -34,7 +34,7 @@ const App = () => {
             </SafeAreaView>
         </AppGradient>      
       </ImageBackground>
-      
+      <StatusBar style="light" />
     </View>
   )
 }
