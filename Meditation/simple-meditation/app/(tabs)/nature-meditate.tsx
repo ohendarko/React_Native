@@ -26,7 +26,7 @@ const NatureMeditate = () => {
             renderItem={({ item }) => {
               return (
                 <Pressable
-                  onPress={() => router.push(`/meditate`)}
+                  onPress={() => router.push(`/meditate/${item.id}`)}
                   style={styles.pressable}
                 >
                   <ImageBackground
