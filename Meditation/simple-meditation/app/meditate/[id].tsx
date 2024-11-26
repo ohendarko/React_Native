@@ -38,13 +38,14 @@ const Meditate = () => {
       return () => {
         clearTimeout(timerId);
       }
-  }, [secondsRemaining]);
+  }, [secondsRemaining, isMeditating]);
 
   useEffect(() => {
     return () => {
+      
       audioSound?.unloadAsync();
     };
-  }, [audioSound, isMeditating]);
+  }, [audioSound]);
   
 
   const toggleMeditationSessionStatus = async () => {
