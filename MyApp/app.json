@@ -7,11 +7,11 @@
     "icon": "./assets/images/coffee-icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/images/coffee-splash.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#000000"
-    },
+    // "splash": {
+    //   "image": "./assets/images/splash.png",
+    //   "resizeMode": "cover",
+    //   "backgroundColor": "#000000"
+    // },
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true
@@ -32,7 +32,7 @@
       // [
       //   "expo-splash-screen",
       //   {
-      //     "image": "./assets/images/coffee-splash.png",
+      //     "image": "./assets/images/splash.png",
       //     "resizeMode": "cover",
       //     "backgroundColor": "#000000"
       //   }
