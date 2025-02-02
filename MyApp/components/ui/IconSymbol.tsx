@@ -1,6 +1,7 @@
 // This file is a fallback for using MaterialIcons on Android and web.
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { SymbolWeight } from 'expo-symbols';
 import React from 'react';
 import { OpaqueColorValue, StyleProp, ViewStyle } from 'react-native';
@@ -10,6 +11,7 @@ const MAPPING = {
   // See MaterialIcons here: https://icons.expo.fyi
   // See SF Symbols in the SF Symbols app on Mac.
   'house.fill': 'home',
+  'house.active': 'home-filled',
   'paperplane.fill': 'send',
   'chevron.left.forwardslash.chevron.right': 'code',
   'chevron.right': 'chevron-right',
@@ -40,4 +42,27 @@ export function IconSymbol({
   weight?: SymbolWeight;
 }) {
   return <MaterialIcons color={color} size={size} name={MAPPING[name]} style={style} />;
+}
+
+const MY_MAPPING = {
+  'house.fill': 'home',
+  'paperplane.fill': 'paper-plane',
+  'chevron.left.forwardslash.chevron.right': 'code-outline',
+  'chevron.right': 'chevron-forward',
+} as const;
+
+export type MyIconSymbolName = keyof typeof MY_MAPPING;
+
+export function MyIconSymbol({
+  name,
+  size = 24,
+  color,
+  style,
+}: {
+  name: MyIconSymbolName;
+  size?: number;
+  color: string | OpaqueColorValue;
+  style?: StyleProp<ViewStyle>;
+}) {
+  return <Ionicons color={color} size={size} name={MY_MAPPING[name]} style={style} />;
 }
