@@ -21,9 +21,9 @@ export default function TabTwoScreen() {
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Contact Us. We love to hear from our users.</ThemedText>
+        <ThemedText type="title">Contact Us.</ThemedText>
       </ThemedView>
-      <ThemedText>You can reach us via email, phonecall or whatsapp or interact with us on social media</ThemedText>
+      <ThemedText>We love to hear from our users. You can reach us via email, phonecall or whatsapp or interact with us on social media</ThemedText>
       <Collapsible title="E-mail">
         <ThemedText>
           This app has two screens:{' '}
