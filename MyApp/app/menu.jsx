@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ImageBackground, Pressable, Appearance, Platform, SafeAreaView, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Pressable, Appearance, Platform, SafeAreaView, ScrollView, FlatList, Image } from 'react-native';
 import React from 'react';
 
 import { Colors } from '@/constants/Colors';
@@ -11,6 +11,19 @@ export default function MenuScreen() {
   const styles = createStyles(theme, colorScheme);
 
   const Container = Platform.OS === 'web' ? ScrollView : SafeAreaView;
+
+  return (
+    <Container>
+
+      <FlatList
+        data={[]}
+        renderItem={({ item })}
+      >
+
+      </FlatList>
+
+    </Container>
+  )
 }
 
 function createStyles(theme, colorScheme) {
