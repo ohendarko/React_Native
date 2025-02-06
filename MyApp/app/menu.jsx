@@ -2,6 +2,9 @@ import { View, Text, StyleSheet, ImageBackground, Pressable, Appearance, Platfor
 import React from 'react';
 
 import { Colors } from '@/constants/Colors';
+import { MENU_ITEMS } from '@/constants/MenuItems';
+import MENU_IMAGES from '@/constants/MenuImages';
+
 
 export default function MenuScreen() {
   const colorScheme = Appearance.getColorScheme()
@@ -11,13 +14,26 @@ export default function MenuScreen() {
   const styles = createStyles(theme, colorScheme);
 
   const Container = Platform.OS === 'web' ? ScrollView : SafeAreaView;
+  const separatorComp = <View style={styles.separator} />
 
   return (
     <Container>
 
       <FlatList
-        data={[]}
-        renderItem={({ item })}
+        data={MENU_ITEMS}
+        keyExtractor={(item) => item.id.toString()}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.contentContainer}
+        ItemSeparatorComponent={separatorComp}
+        renderItem={({ item }) => (
+          <View>
+            <View>
+              <Text>{item.title}</Text>
+              <Text>{item.description}</Text>
+            </View>
+            <Image source={MENU_IMAGES[item.id - 1]} />
+          </View>
+        )}
       >
 
       </FlatList>
@@ -28,6 +44,19 @@ export default function MenuScreen() {
 
 function createStyles(theme, colorScheme) {
   return StyleSheet.create({
-
+    contentContainer: {
+      paddingTop: 10,
+      paddingBottom: 20,
+      paddingHorizontal: 12,
+      backgroundColor: theme.background
+    },
+    separator: {
+      height: 1,
+      backgroundColor: colorScheme === 'dark' ? 'papayawhip' : '#000',
+      width: '50%',
+      maxWidth: 300,
+      marginHorizontal: 'auto',
+      marginBottom: 10,
+    }
   })
 }
