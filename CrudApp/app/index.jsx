@@ -3,6 +3,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useState, useContext, useEffect } from "react";
 import { ThemeContext } from "@/context/ThemeContext";
 import { data } from "@/data/todos";
+import { useRouter } from "expo-router";
 
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Octicons from '@expo/vector-icons/Octicons';
@@ -16,8 +17,8 @@ export default function Index() {
   const [todos, setTodos] = useState([]);
 
   const [text, setText] = useState('');
-  const { colorScheme, setColorScheme, theme } = useContext(ThemeContext)
-
+  const { colorScheme, setColorScheme, theme } = useContext(ThemeContext);
+  const router = useRouter();
   const [loaded, error] = useFonts({
     Inter_500Medium,
   })
@@ -78,14 +79,23 @@ export default function Index() {
     setTodos(todos.filter(todo => todo.id !== id))
   }
 
+  const handlePress = (id) => {
+    router.push(`/todos/${id}`)
+  }
+
   const renderItem = ({ item }) => (
     <View style={styles.todoItem}>
-      <Text
-        style={[styles.todoText, item.completed && styles.completedText]}
-        onPress={() => toggleTodo(item.id)}
+      <Pressable
+      onPress={() => handlePress(item.id)}
+        onLongPress={() => toggleTodo(item.id)}
       >
-        {item.title}
-      </Text>
+        <Text
+          style={[styles.todoText, item.completed && styles.completedText]}          
+        >
+          {item.title}
+        </Text>
+      </Pressable>
+      
       <Pressable
         onPress={() => removeTodo(item.id)}
       >
