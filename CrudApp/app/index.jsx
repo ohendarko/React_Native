@@ -5,6 +5,7 @@ import { ThemeContext } from "@/context/ThemeContext";
 import { data } from "@/data/todos";
 import { useRouter } from "expo-router";
 
+
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Octicons from '@expo/vector-icons/Octicons';
 import { Inter_500Medium, useFonts } from "@expo-google-fonts/inter";
@@ -85,17 +86,29 @@ export default function Index() {
 
   const renderItem = ({ item }) => (
     <View style={styles.todoItem}>
-      <Pressable
-        onPress={() => handlePress(item.id)}
-        onLongPress={() => toggleTodo(item.id)}
-        keyExtractor={item => item.id.toString()}
-      >
-        <Text
-          style={[styles.todoText, item.completed && styles.completedText]}          
+      <View style={styles.todoBox}>
+        <Pressable
+        onPress={() => toggleTodo(item.id)}
+        style={{ marginRight: 5 }}
         >
-          {item.title}
-        </Text>
-      </Pressable>
+          <MaterialCommunityIcons
+            name={item.completed ? "check-circle" : "checkbox-blank-circle-outline"}
+            size={18}
+            color={item.completed ? "green" : "gray"}
+          />
+        </Pressable>
+        <Pressable
+          onPress={() => handlePress(item.id)}
+          onLongPress={() => toggleTodo(item.id)}
+          keyExtractor={item => item.id.toString()}
+        >
+          <Text
+            style={[styles.todoText, item.completed && styles.completedText]}          
+          >
+            {item.title}
+          </Text>
+        </Pressable>
+      </View>
       
       <Pressable
         onPress={() => removeTodo(item.id)}
@@ -198,6 +211,11 @@ function createStyles(theme, colorScheme) {
     completedText: {
       textDecorationLine: 'line-through',
       color: 'gray',
+    },
+    todoBox: {
+      flex: 1,
+      flexDirection: 'row',
+
     }
   }) 
 }
