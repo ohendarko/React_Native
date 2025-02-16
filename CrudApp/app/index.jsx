@@ -4,8 +4,6 @@ import { useState, useContext, useEffect } from "react";
 import { ThemeContext } from "@/context/ThemeContext";
 import { data } from "@/data/todos";
 import { useRouter } from "expo-router";
-
-
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Octicons from '@expo/vector-icons/Octicons';
 import { Inter_500Medium, useFonts } from "@expo-google-fonts/inter";
