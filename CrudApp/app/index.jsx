@@ -21,7 +21,7 @@ export default function Index() {
   const router = useRouter();
   const [loaded, error] = useFonts({
     Inter_500Medium,
-  })
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,7 +40,7 @@ export default function Index() {
     }
 
     fetchData()
-  }, [data])
+  }, [data]);
 
   useEffect(() => {
     const storeData = async () => {
@@ -53,7 +53,7 @@ export default function Index() {
     }
 
     storeData()
-  }, [todos])
+  }, [todos]);
 
   if (!loaded && !error) {
     return null
@@ -86,8 +86,9 @@ export default function Index() {
   const renderItem = ({ item }) => (
     <View style={styles.todoItem}>
       <Pressable
-      onPress={() => handlePress(item.id)}
+        onPress={() => handlePress(item.id)}
         onLongPress={() => toggleTodo(item.id)}
+        keyExtractor={item => item.id.toString()}
       >
         <Text
           style={[styles.todoText, item.completed && styles.completedText]}          
@@ -110,6 +111,7 @@ export default function Index() {
         <TextInput
           type='text'
           style={styles.input}
+          maxLength={30}
           placeholder="Add a new todo"
           placeholderTextColor="gray"
           value={text}
@@ -118,8 +120,10 @@ export default function Index() {
         <Pressable onPress={addTodo} style={styles.addButton}>
           <Text style={styles.addButtonText}>Add</Text>
         </Pressable>
-        <Pressable onPress={() => setColorScheme(colorScheme === 'light' ? 'dark' : 'light')} style={{ marginLeft: 10 }}>
-          {colorScheme === 'dark' ? <Octicons name='moon' size={36} color={theme.text} selectable={undefined} style={{ width: 36 }} /> : <Octicons name='sun' size={36} color={theme.text} selectable={undefined} style={{ width: 36 }} />}
+        <Pressable
+          onPress={() => setColorScheme(colorScheme === 'light' ? 'dark' : 'light')} style={{ marginLeft: 10 }}>
+
+          <Octicons name={colorScheme === 'dark' ? 'moon' : 'sun'} size={36} color={theme.text} selectable={undefined} style={{ width: 36 }} />
         </Pressable>
       </View>
 
