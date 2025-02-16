@@ -85,16 +85,7 @@ export default function Index() {
   const renderItem = ({ item }) => (
     <View style={styles.todoItem}>
       <View style={styles.todoBox}>
-        <Pressable
-        onPress={() => toggleTodo(item.id)}
-        style={{ marginRight: 5 }}
-        >
-          <MaterialCommunityIcons
-            name={item.completed ? "check-circle" : "checkbox-blank-circle-outline"}
-            size={18}
-            color={item.completed ? "green" : "gray"}
-          />
-        </Pressable>
+        
         <Pressable
           onPress={() => handlePress(item.id)}
           onLongPress={() => toggleTodo(item.id)}
@@ -105,6 +96,16 @@ export default function Index() {
           >
             {item.title}
           </Text>
+        </Pressable>
+        <Pressable
+        onPress={() => toggleTodo(item.id)}
+        style={{ marginLeft: 10 }}
+        >
+          <MaterialCommunityIcons
+            name={item.completed ? "check-circle" : "checkbox-blank-circle-outline"}
+            size={20}
+            color={item.completed ? "green" : "gray"}
+          />
         </Pressable>
       </View>
       
