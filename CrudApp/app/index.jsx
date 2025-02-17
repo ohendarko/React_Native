@@ -14,7 +14,6 @@ import { StatusBar } from "expo-status-bar";
 
 export default function Index() {
   const [todos, setTodos] = useState([]);
-
   const [text, setText] = useState('');
   const { colorScheme, setColorScheme, theme } = useContext(ThemeContext);
   const router = useRouter();
