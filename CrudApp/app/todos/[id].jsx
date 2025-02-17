@@ -21,7 +21,6 @@ export default function EditScreen() {
   });
 
   useEffect(() => {
-
     const fetchData = async (id) => {
       try {
         const jsonValue = await AsyncStorage.getItem("TodoApp");
