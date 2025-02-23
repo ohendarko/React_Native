@@ -1,4 +1,4 @@
-import { Client, Account, ID } from 'react-native-appwrite';
+import { Client, Account, ID, Avatars, Databases } from 'react-native-appwrite';
 
 
 export const config = {
@@ -21,14 +21,56 @@ client
 ;
 
 const account = new Account(client);
+const avatars = new Avatars(client);
+const databases = new Databases(client);
 
-export const createUser = () => {
-  // Register User
-  account.create(ID.unique(), 'me@example.com', 'password', 'Jane Doe')
-    .then(function (response) {
-        console.log(response);
-    }, function (error) {
-        console.log(error);
-    });
+export const createUser = async (email, password, username) => {
+  try {
+    const newAccount = await account.create(
+      ID.unique(),
+      email,
+      password,
+      username
+    )
+
+    if(!newAccount) throw Error;
+
+    const avatarUrl = avatars.getInitials(username)
+
+    await signIn(email, password);
+
+    const newUser = await databases.createDocument(
+      config.databaseId,
+      config.userCollectionId,
+      ID.unique(),
+      {
+        accountId: newAccount.$id,
+        email,
+        username,
+        avatar: avatarUrl
+      }
+    )
+    return newUser
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+    
+  }
 }
 
+export async function signIn(email, password) {
+  try {
+    const active = await account.get(); // Check if user is logged in
+    if (active) {
+      await account.deleteSession('current'); // Log out the active session
+    }
+  } catch (error) {
+    console.log("No active session found, proceeding with login.");
+  }
+  try {
+    const session = await account.createEmailPasswordSession(email, password)
+    return session;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
