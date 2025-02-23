@@ -7,6 +7,8 @@ import { images } from '@/constants'
 import CustomButton from '../components/CustomButton';
 import { StatusBar } from 'expo-status-bar';
 
+import 'react-native-url-polyfill/auto';
+
 const index = () => {
   return (
     <SafeAreaView className="bg-primary h-full">
