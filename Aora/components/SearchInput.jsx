@@ -10,10 +10,10 @@ const SearchInput = ({ title, value, placeholder, handleChangeText, otherStyles,
   return (
     <View className="border-2 border-black-200 w-full h-16 px-4 bg-black-100 rounded-2xl flex-row focus:border-secondary items-center sapce-x-4">
       <TextInput
-        className="flex-1 text-white font-pregular text-base mt-0.5"
+        className="text-base mt-0.5 text-white flex-1 font-pregular"
         value={value}
-        placeholder={placeholder}
-        placeholderTextColor="#7b78b"
+        placeholder="Search for video topic"
+        placeholderTextColor="#7b7b8b"
         onChangeText={handleChangeText}
         secureTextEntry={title === 'Password' && !showPassword}
       />
