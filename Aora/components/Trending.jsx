@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import * as Animatable from "react-native-animatable";
 import { icons } from "@/constants";
 import { useVideoPlayer, VideoView } from 'expo-video';
+import { useEvent } from 'expo';
 
 
 const zoomIn = {
@@ -25,6 +26,11 @@ const TrendingItem = ({ activeItem, item }) => {
   // const player = useVideoPlayer(testVideo, (player) => {
   //   player.loop = true;
   // });
+  const { isPlaying } = useEvent(player, 'playingChange', { isPlaying: player.playing });
+
+  useEvent(player, 'ended', () => {
+    setPlay(false);
+  });
 
   // Track play state changes
   useEffect(() => {
@@ -57,6 +63,7 @@ const TrendingItem = ({ activeItem, item }) => {
           player={player}
           allowsFullscreen
           allowsPictureInPicture
+          
           style={{
             width: '100%',
             height: '100%',
