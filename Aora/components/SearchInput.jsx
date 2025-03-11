@@ -5,10 +5,10 @@ import { icons } from "@/constants";
 import { router, usePathname } from 'expo-router';
 
 
-const SearchInput = () => {
+const SearchInput = ({ initialQuery }) => {
 
   const pathname =  usePathname();
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(initialQuery || '');
   
   return (
     <View className="border-2 border-black-200 w-full h-16 px-4 bg-black-100 rounded-2xl flex-row focus:border-secondary items-center sapce-x-4">
