@@ -7,37 +7,37 @@ import { useEvent } from 'expo';
 const VideoCard = ({ video: { title, thumbnail, video, creator: { username, avatar } } }) => {
 
   const [play, setPlay] = useState(false);
-    const player = useVideoPlayer(video, (player) => {
-      player.loop = false;
-    });
-    // const testVideo = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
-    // const player = useVideoPlayer(testVideo, (player) => {
-    //   player.loop = true;
-    // });
-    const { isPlaying } = useEvent(player, 'playingChange', { isPlaying: player.playing });
+  const player = useVideoPlayer(video, (player) => {
+    player.loop = false;
+  });
+  // const testVideo = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+  // const player = useVideoPlayer(testVideo, (player) => {
+  //   player.loop = true;
+  // });
+  const { isPlaying } = useEvent(player, 'playingChange', { isPlaying: player.playing });
+
+  useEvent(player, 'ended', () => {
+    setPlay(false);
+  });
+
+  // Track play state changes
+  useEffect(() => {
+    const togglePlayback = async () => {
+      try {
+        if (!player) return; // Ensure player is initialized
   
-    useEvent(player, 'ended', () => {
-      setPlay(false);
-    });
-  
-    // Track play state changes
-    useEffect(() => {
-      const togglePlayback = async () => {
-        try {
-          if (!player) return; // Ensure player is initialized
-    
-          if (play) {
-            player.play();  // Use await if play() is asynchronous
-          } else {
-            player.pause();
-          }
-        } catch (error) {
-          console.error("Video playback error:", error);
+        if (play) {
+          player.play();  // Use await if play() is asynchronous
+        } else {
+          player.pause();
         }
-      };
-    
-      togglePlayback();
-    }, [play, player]);
+      } catch (error) {
+        console.error("Video playback error:", error);
+      }
+    };
+  
+    togglePlayback();
+  }, [play, player]);
 
   return (
     <View className="flex-col items-center px-4 mb-14">
