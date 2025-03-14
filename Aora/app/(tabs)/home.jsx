@@ -16,14 +16,12 @@ const Home = () => {
   const { user, setUser, setIsLoggedIn} = useGlobalContext();
   const { data: posts, refetch } = useAppwrite(getAllPosts);
   const { data: latestPosts } = useAppwrite(getLatestPosts);
-
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = async () => {
     setRefreshing(true);
     await refetch();
     setRefreshing(false);
   }
-
 
   return (
     <SafeAreaView className="bg-primary h-full">
@@ -75,7 +73,6 @@ const Home = () => {
       />
       <StatusBar backgroundColor="#161622" style='light' />
     </SafeAreaView>
-    
   )
 }
 
