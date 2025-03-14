@@ -105,7 +105,6 @@ const Create = () => {
           containerStyles="mt-7"
           isLoading={uploading}
         />
-
       </ScrollView>
     </SafeAreaView>
   )
