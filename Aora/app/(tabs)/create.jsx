@@ -7,6 +7,7 @@ import { useVideoPlayer, VideoView } from 'expo-video';
 import { useEvent } from 'expo';
 import *  as  DocumentPicker from "expo-document-picker";
 import { icons } from "@/constants";
+import { router } from 'expo-router';
 
 const Create = () => {
   
@@ -40,10 +41,34 @@ const Create = () => {
     }
 
     console.log(form);
+    console.log(Object.values(form));
+
   }
 
   const submit = () => {
+    if (Object.values(form).some(value => !value)) {
+      return Alert.alert('Please fill in all fields')
+    }
 
+    setUploading(true)
+
+    try {
+      
+
+      Alert.alert("Success", "Post Uploaded Successfully")
+      router.push('/home')
+    } catch (error) {
+      Alert.alert("Error", error.message)
+    } finally {
+      setForm({
+        title: '',
+        video: null,
+        thumbnail: null,
+        prompt: ''
+      });
+
+      setUploading(false);
+    }
   }
 
   const player = useVideoPlayer(form.video, (player) => {

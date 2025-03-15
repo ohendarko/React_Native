@@ -1,4 +1,4 @@
-import { Client, Account, ID, Avatars, Databases, Query } from 'react-native-appwrite';
+import { Client, Account, ID, Avatars, Databases, Query, Storage } from 'react-native-appwrite';
 
 
 export const config = {
@@ -33,6 +33,7 @@ client
 const account = new Account(client);
 const avatars = new Avatars(client);
 const databases = new Databases(client);
+const storage = new Storage(client);
 
 export const createUser = async (email, password, username) => {
   try {
@@ -165,5 +166,39 @@ export const signOut = async () => {
   } catch (error) {
     throw new Error(error);
     
+  }
+}
+
+export const uploadFile = async (file, type) => {
+  if(!file) return;
+
+  const { mimeType, ...rest} = file;
+  const asset = { type: mimeType, ...rest };
+
+  try {
+    const uploadedFile = await storage.createFile(
+      storageId,
+      ID.unique(),
+      asset
+    );
+
+    const fileUrl = await getFilePreview(uploadedFile.$id, type);
+
+    return fileUrl;
+    
+  } catch (error) {
+    throw new Error(error);
+    
+  }
+}
+
+export const createVideo = async (form) => {
+  try {
+    const [thumbnailUrl, videoUrl] = await Promise.all([
+      uploadFile(form.thumbnail, 'image'),
+      uploadFile(form.video, 'video'),
+    ])
+  } catch (error) {
+    throw new Error(error);
   }
 }
