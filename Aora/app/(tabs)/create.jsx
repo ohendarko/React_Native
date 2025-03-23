@@ -6,11 +6,14 @@ import CustomButton from "../../components/CustomButton";
 import { useVideoPlayer, VideoView } from 'expo-video';
 import { useEvent } from 'expo';
 import *  as  DocumentPicker from "expo-document-picker";
+import * as ImagePicker from 'expo-image-picker';
 import { icons } from "@/constants";
 import { router } from 'expo-router';
+import { createVideo } from '../../lib/appwrite';
+import { useGlobalContext } from '../../context/GlobalProvider';
 
 const Create = () => {
-  
+  const { user } = useGlobalContext();
   const [uploading, setUploading] = useState(false)
   const [form, setForm] = useState({
     title: '',
@@ -20,11 +23,12 @@ const Create = () => {
   });
 
   const  openPicker  =  async (selectType) => {
-    const result = await DocumentPicker.getDocumentAsync({
-      type: selectType === 'image' ? ['image/png', 'image/jpg', 'image/jpeg'] : ['video/mp4', 'video/gif', 'video/mkv']
-    })
-
-    console.log(result);
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: selectType === 'image' ? ['images'] : ['videos'],
+      // allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
     
 
     if(!result.canceled) {
@@ -34,18 +38,14 @@ const Create = () => {
       if(selectType === 'video') {
         setForm({ ...form, video: result.assets[0]})
       }
-    } else {
-      setTimeout(() => {
-        Alert.alert('Document picked', JSON.stringify(result, null, 2))
-      }, 100)
-    }
+    } 
 
-    console.log(form);
-    console.log(Object.values(form));
+    // console.log(form);
+    // console.log(Object.values(form));
 
   }
 
-  const submit = () => {
+  const submit = async () => {
     if (Object.values(form).some(value => !value)) {
       return Alert.alert('Please fill in all fields')
     }
@@ -53,7 +53,9 @@ const Create = () => {
     setUploading(true)
 
     try {
-      
+      await createVideo({
+        ...form, userId: user.$id
+      })
 
       Alert.alert("Success", "Post Uploaded Successfully")
       router.push('/home')

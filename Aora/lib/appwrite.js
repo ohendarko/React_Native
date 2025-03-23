@@ -109,7 +109,8 @@ export const getAllPosts = async () => {
   try {
     const posts = await databases.listDocuments(
       databaseId,
-      videoCollectionId
+      videoCollectionId,
+      
     )
     return posts.documents
   } catch (error) {
@@ -169,11 +170,37 @@ export const signOut = async () => {
   }
 }
 
+export const getFilePreview = async (fileId, type) => {
+  let fileUrl;
+
+  try {
+    if(type === 'video') {
+      fileUrl = storage.getFileView(storageId, fileId)
+    } else if(type === 'image') {
+      fileUrl = storage.getFilePreview(storageId, fileId, 2000, 2000, 'top', 100)
+    } else {
+      throw new Error("Invalid File Type");
+    }
+
+    if(!fileUrl) throw Error;
+
+    return fileUrl
+    
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 export const uploadFile = async (file, type) => {
   if(!file) return;
 
   const { mimeType, ...rest} = file;
-  const asset = { type: mimeType, ...rest };
+  const asset = { 
+    name: file.fileName,
+    type: file.mimeType,
+    size: file.fileSize,
+    uri: file.uri,
+   };
 
   try {
     const uploadedFile = await storage.createFile(
@@ -198,6 +225,16 @@ export const createVideo = async (form) => {
       uploadFile(form.thumbnail, 'image'),
       uploadFile(form.video, 'video'),
     ])
+
+    const newPost = await databases.createDocument(databaseId, videoCollectionId, ID.unique(), {
+      title: form.title,
+      thumbnail: thumbnailUrl,
+      video: videoUrl,
+      prompt: form.prompt,
+      creator: form.userId
+    })
+
+    return newPost;
   } catch (error) {
     throw new Error(error);
   }
