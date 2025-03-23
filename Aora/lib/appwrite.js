@@ -110,7 +110,7 @@ export const getAllPosts = async () => {
     const posts = await databases.listDocuments(
       databaseId,
       videoCollectionId,
-      
+      [Query.orderDesc('$createdAt')]
     )
     return posts.documents
   } catch (error) {
