@@ -21,7 +21,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff",
         "package": "com.kod.aora"
-      }
+      },
+      "package": "com.ohendarko.Aora"
     },
     "web": {
       "bundler": "metro",
@@ -43,6 +44,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "ce14ca78-c5a5-4361-9cd4-1ba6cc77ad88"
+      }
+    },
+    "owner": "ohendarko"
   }
 }
